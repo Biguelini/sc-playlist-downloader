@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "axios": "^1.7.2",
+    "soundcloud-downloader": "^1.0.0"
+  }
+}
