@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoundCloud Downloader</title>
+  </head>
+  <body>
+    <h1>SoundCloud Downloader</h1>
+    <input
+      type="text"
+      id="playlistUrl"
+      placeholder="Enter playlist URL"
+      value=""
+      style="width: 60vw" />
+    <button id="fetchTracks">Baixar Tracks</button>
+    <p id="trackList"></p>
+    <script>
+      const { ipcRenderer } = require("electron");
+
+      document
+        .getElementById("fetchTracks")
+        .addEventListener("click", async () => {
+          document.getElementById("trackList").innerHTML = "Baixando...";
+          const playlistUrl = document.getElementById("playlistUrl").value;
+          const res = await ipcRenderer.invoke("download-tracks", playlistUrl);
+
+          const musicsQtd = res.links.length;
+          document.getElementById("trackList").innerHTML = `${musicsQtd} músicas foram baixadas da playlist ${res.playlistTitle} com sucesso!`;
+
+          document.getElementById("playlistUrl").value = "";
+        });
+    </script>
+  </body>
+</html>
